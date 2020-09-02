@@ -1,7 +1,8 @@
 const input = document.querySelector('#input'),
-      btn = document.querySelector("#start");
+      btn1 = document.querySelector("#start");
+      btn2 = document.querySelector("#start");
 
-      btn.onclick = function() {
+      btn1.onclick = function() {
         let val = document.getElementById('input').value;
 function fibi(n) {  // число n передадим параметром в ф-ю
     
