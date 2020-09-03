@@ -84,16 +84,14 @@ let frstObj = {
     "c": "3",
     "d": "4",
     "e": "5",
-    "f": "6" };   // empty object to contain reversed key/value paris
-  
-   // first get all keys in an array
+    "f": "6" };
 
 function reposition(e) {
     let copyObj = {};
     let keys = Object.keys(e);
     keys.forEach(function(key){
-        var val = e[key];   // get the value for the current key
-        copyObj[val] = key;      // reverse is done here
+        var val = e[key];
+        copyObj[val] = key;
     });
     console.log(copyObj);
 }
@@ -114,3 +112,64 @@ console.log (convertObj(givenObj));
 
 //Шестое задание
 
+function uncamelize(str, sep) {
+ 
+    if(typeof(separator) == "undefined") {
+      sep = " ";
+    }
+
+    let res = str.replace(/[A-Z]/g, function (e) {
+      return sep + e.toLowerCase();
+    });
+
+    return res.replace("/^" + sep + "/", '');
+}
+
+console.log(uncamelize("helloWorld", "_"));
+
+//Седьмое задание
+
+function findSub(main, sub) {
+    main += '';
+    sub += '';
+    if (sub.length <= 0) {
+        return main.length + 1;
+    }
+    let subStr = sub.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return "Количество повторений: " + (main.match(new RegExp(subStr, 'gi')) || []).length;
+}
+
+console.log(findSub("Test the test to be tested", 'test'));
+
+//Восьмое задание
+
+let arrTest = [5,1,8,[1,2,5,4,[2,5,4]]];
+    function flatty(arr) {
+        return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatty(val)) : acc.concat(val), []).sort( (a, b) => a - b );
+        /* arr.sort( (a, b) => a - b ); */
+    }
+
+console.log(flatty(arrTest));
+
+//Девятое задание
+
+let data = [1, 2, undefined, 5, 4, null, undefined, 7];
+
+function del (arr, callback) {
+    setTimeout(() => {
+        try {
+            arr = arr.filter((e) => {return e !== undefined && e!== null;});
+            callback(null, arr);
+          } catch (err) {
+            callback(err, null);
+          }
+    },5000);
+}
+
+del(data, (err, data) => {
+    if(err) {
+        console.log("Error");
+    } else {
+        console.log(data);
+    }
+});
