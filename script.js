@@ -75,3 +75,42 @@ btn3.onclick = function() {
         alert('No matches found');
     }
 };
+
+//Четвертое задание
+
+let frstObj = {
+    "a": "1",
+    "b": "2",
+    "c": "3",
+    "d": "4",
+    "e": "5",
+    "f": "6" };   // empty object to contain reversed key/value paris
+  
+   // first get all keys in an array
+
+function reposition(e) {
+    let copyObj = {};
+    let keys = Object.keys(e);
+    keys.forEach(function(key){
+        var val = e[key];   // get the value for the current key
+        copyObj[val] = key;      // reverse is done here
+    });
+    console.log(copyObj);
+}
+
+console.log(reposition(frstObj));
+
+//Пятое задание
+
+function convertObj (obj) {
+    const mp = new Map;
+    Object.keys(obj).forEach(k => {mp.set(k, obj[k]);});
+    return mp;
+}
+
+const givenObj = {"a":2, "b":9, "c":4};
+console.log(givenObj);
+console.log (convertObj(givenObj));
+
+//Шестое задание
+
