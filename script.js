@@ -146,7 +146,6 @@ console.log(findSub("Test the test to be tested", 'test'));
 let arrTest = [5,1,8,[1,2,5,4,[2,5,4]]];
     function flatty(arr) {
         return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatty(val)) : acc.concat(val), []).sort( (a, b) => a - b );
-        /* arr.sort( (a, b) => a - b ); */
     }
 
 console.log(flatty(arrTest));
@@ -160,9 +159,9 @@ function del (arr, callback) {
         try {
             arr = arr.filter((e) => {return e !== undefined && e!== null;});
             callback(null, arr);
-          } catch (err) {
+        } catch (err) {
             callback(err, null);
-          }
+        }
     },5000);
 }
 
@@ -173,3 +172,144 @@ del(data, (err, data) => {
         console.log(data);
     }
 });
+
+//Десятое задание
+
+function returnProm(input) {
+    return new Promise(function(res, rej) {
+        setTimeout(function() {
+            res(input + 69);
+        }, 6000);
+    });
+}
+returnProm(10).then(function(val) {
+   console.log(val);
+});
+
+//Одинадцатое задание
+
+const firstPromise = () => {
+    return Promise.resolve('first');
+};
+  
+const secondPromise = () => {
+    return Promise.resolve('second');
+};
+
+const thirdPromise = () => {
+    return Promise.resolve('third');
+};
+
+const fourthPromise = () => {
+    return Promise.resolve('fourth');
+};
+  
+function promiseAll(promises) {
+    return new Promise((resolve, reject) => {
+        const promiseCount = promises.length;
+        const resolvedData = [];
+        let resolvedCount = 0;
+        
+        function checkStatus(data) {
+            
+            resolvedData.push(data);
+            resolvedCount++;
+            
+            if (resolvedCount === promiseCount) {
+                resolve(resolvedData);
+            }
+        }
+        
+        promises.forEach((promise, i) => {
+            promise().then((data) => {
+                checkStatus(data);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+        });
+    });
+}
+  
+promiseAll([firstPromise, secondPromise, thirdPromise, fourthPromise])
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+//Двенадцатое задание
+
+global.fetch = require("node-fetch");
+
+//1st
+
+async function Prom (url) {
+    await fetch(url)
+        .then(res => {
+            if (res.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            return res.json();
+        })
+        .then(result => {
+            console.log(result.standard.city + " - " + result.standard.countryname);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}
+Prom('http://geocode.xyz/Minsk?json=1&auth=175815429341447673120x127602');
+Prom('http://geocode.xyz/Madrid?json=1&auth=175815429341447673120x127602');
+Prom('http://geocode.xyz/Rome?json=1&auth=175815429341447673120x127602');
+
+//2nd
+global.fetch = require("node-fetch");
+
+function Promy (url) {
+    const response = fetch(url)
+        .then(res => {
+            if (res.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            return res.json();
+        })
+        .then(result => {
+            return result.standard.countryname;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+        return response;
+}
+
+Promise.race([Promy('http://geocode.xyz/Paris?json=1&auth=175815429341447673120x127602'),Promy('http://geocode.xyz/Nice?json=1&auth=175815429341447673120x127602')])
+    .then((value) => {
+        console.log(value);
+    });
+//3rd
+/* function returnProm(input) {
+    return new Promise(function(res, rej) {
+        setTimeout(function() {
+            res(input + 69);
+        }, 6000);
+    });
+}
+returnProm(10).then(function(val) {
+   console.log(val);
+}); */
+global.fetch = require("node-fetch");
+fetch('http://geocode.xyz/city?json=1&auth=175815429341447673120x127602')
+        .then(res => {
+            if (res.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            return res.json();
+        })
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => {
+            console.error(err);
+        });
