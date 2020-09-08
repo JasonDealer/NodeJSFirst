@@ -289,27 +289,53 @@ Promise.race([Promy('http://geocode.xyz/Paris?json=1&auth=175815429341447673120x
         console.log(value);
     });
 //3rd
-/* function returnProm(input) {
-    return new Promise(function(res, rej) {
-        setTimeout(function() {
-            res(input + 69);
-        }, 6000);
+
+
+/* global.fetch = require("node-fetch");
+const f = () => {
+    return Promise.resolve(result.standard.city);
+};
+
+function promiseAll(promises) {
+    return new Promise((resolve, reject) => {
+        fetch('http://geocode.xyz/Paris?json=1&auth=175815429341447673120x127602')
+            .then(res => {
+                if (res.status >= 400) {
+                    throw new Error("Bad response from server");
+                }
+                return res.json();
+            })
+            .then((result) => {
+                return result;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+        const promiseCount = promises.length;
+        let resolvedCount = 0;
+        
+        function checkStatus() {
+            
+            if (resolvedCount === promiseCount) {
+                resolve(result);
+            }
+        }
+        
+        promises.forEach((promise, i) => {
+            promise().then((data) => {
+                checkStatus(data);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+        });
     });
 }
-returnProm(10).then(function(val) {
-   console.log(val);
-}); */
-global.fetch = require("node-fetch");
-fetch('http://geocode.xyz/city?json=1&auth=175815429341447673120x127602')
-        .then(res => {
-            if (res.status >= 400) {
-                throw new Error("Bad response from server");
-            }
-            return res.json();
-        })
-        .then(result => {
-            console.log(result);
-        })
-        .catch(err => {
-            console.error(err);
-        });
+  
+promiseAll([f])
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    }); */
